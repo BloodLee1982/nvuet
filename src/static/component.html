@@ -5,10 +5,28 @@
     <title></title>
 </head>
 <body>
-
+<div id="app7">
+    <ol>
+        <todo-item v-for="item in gList" v-bind:todo="item"></todo-item>
+    </ol>
+</div>
 </body>
 <script type="text/javascript" src="../js/vue.js"></script>
 <script>
+    Vue.component('todo-item', {
+        props: ['todo'],
+        template: '<li>{{ todo.text }}</li>'
+    })
 
+    var app7 = new Vue({
+        el: '#app7',
+        data: {
+            gList: [
+                { text: '蔬菜' },
+                { text: '奶酪' },
+                { text: '随便其他什么人吃的东西' }
+            ]
+        }
+    })
 </script>
 </html>
