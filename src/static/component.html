@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
@@ -9,6 +9,18 @@
     <ol>
         <todo-item v-for="item in gList" v-bind:todo="item"></todo-item>
     </ol>
+</div>
+<div id="todo-list">
+    <input v-model="newTodoText"
+            v-on:keyup.enter="addNewTodo"
+            placeholder="Add a todo">
+    <ul>
+        <li is="todo-tiem2"
+            v-for="(todo, index) in todos"
+            v-bind:title="todo"
+            v-on:remove="todos.splice(index, 1)">
+        </li>
+    </ul>
 </div>
 </body>
 <script type="text/javascript" src="../js/vue.js"></script>
@@ -26,6 +38,34 @@
                 { text: '奶酪' },
                 { text: '随便其他什么人吃的东西' }
             ]
+        }
+    })
+
+    Vue.component('todo-tiem2', {
+        template: '\
+            <li>\
+              {{ title }}\
+              <button v-on:click="$emit(\'remove\')">X</button>\
+            </li>\
+          ',
+        props: ['title']
+    })
+
+    new Vue({
+        el: '#todo-list',
+        data: {
+            newTodoText: '',
+            todos: [
+                'Do the dishes',
+                'Take out the trash',
+                'Mow the lawn'
+            ]
+        },
+        methods: {
+            addNewTodo: function() {
+                this.todos.push(this.newTodoText)
+                this.newTodoText = '';
+            }
         }
     })
 </script>
