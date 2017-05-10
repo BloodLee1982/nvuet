@@ -22,6 +22,15 @@
         </li>
     </ul>
 </div>
+<div id="example-6" class="demo">
+    <select v-model="selected" style="width: 50px">
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+    </select>
+    <br>
+    <span>Selected: {{ selected }}</span>
+</div>
 </body>
 <script type="text/javascript" src="../js/vue.js"></script>
 <script>
@@ -66,6 +75,13 @@
                 this.todos.push(this.newTodoText)
                 this.newTodoText = '';
             }
+        }
+    })
+
+    new Vue({
+        el: '#example-6',
+        data: {
+            selected: []
         }
     })
 </script>
