@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        html, body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            background: #f0f0f0;
+        }
+        .outer {
+            background: #0099cc;
+            width: 800px;
+            height: 100px;
+        }
+        .inside {
+            height: 100px;
+            z-index: 100;
+            background: #ffffff;
+            width: 0px;
+        }
+    </style>
+</head>
+<body>
+<div id="demo" class="outer">
+    <demo-slide></demo-slide>
+</div>
+</body>
+<script type="text/javascript" src="../js/vue.js"></script>
+
+<script type="text/x-template" id="slide-template">
+    <div class="inside">
+        <button @click="doSlide">+</button>
+    </div>
+</script>
+
+<script>
+    Vue.component('demo-slide', {
+        template: '#slide-template',
+
+        methods: {
+            doSlide: function(e) {
+                e.target.parentNode.style.width = 100 + 'px'
+            }
+        }
+    })
+
+    var demo = new Vue({
+        el: '#demo',
+        data: {
+        }
+    })
+</script>
+</html>
