@@ -26,31 +26,40 @@
 </head>
 <body>
 <div id="demo" class="outer">
-    <demo-slide></demo-slide>
+    <demo-slide :swidth="slideWidth"></demo-slide>
+    <button @click="doSlide">+</button>
 </div>
 </body>
 <script type="text/javascript" src="../js/vue.js"></script>
 
 <script type="text/x-template" id="slide-template">
-    <div class="inside">
-        <button @click="doSlide">+</button>
+    <div id="ind" class="inside">
     </div>
 </script>
 
 <script>
     Vue.component('demo-slide', {
         template: '#slide-template',
-
-        methods: {
-            doSlide: function(e) {
-                e.target.parentNode.style.width = 100 + 'px'
-            }
+        props: {
+            swidth: Number
+        },
+        mounted: function() {
+            this.$nextTick(function () {
+                    document.getElementById('ind').style.width = this.swidth + 'px'
+                })
         }
+
     })
 
     var demo = new Vue({
         el: '#demo',
         data: {
+            slideWidth: 0
+        },
+        methods: {
+            doSlide: function(e) {
+                this.slideWidth += 100;
+            }
         }
     })
 </script>
