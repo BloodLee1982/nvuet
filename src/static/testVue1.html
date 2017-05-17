@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:v-on="http://www.w3.org/1999/xhtml">
+<html xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
@@ -13,27 +15,32 @@
         }
         .outer {
             background: #0099cc;
-            width: 800px;
+            width: 1000px;
             height: 100px;
         }
         .inside {
             height: 100px;
             z-index: 100;
-            background: #ffffff;
+            background: #5cb85c;
             width: 0px;
+        }
+        .data {
+            color: #ffffff;
+            font-size: 25px;
         }
     </style>
 </head>
 <body>
 <div id="demo" class="outer">
     <demo-slide :swidth="slideWidth"></demo-slide>
-    <button @click="doSlide">+</button>
+    <button @click="doSlide">run</button><button @click="reset">reset</button>
 </div>
 </body>
 <script type="text/javascript" src="../js/vue.js"></script>
 
 <script type="text/x-template" id="slide-template">
-    <div id="ind" class="inside">
+    <div class="inside" v-bind:style="{ width: swidth + 'px' }">
+        <div class="data">{{ parseInt(swidth / 1000 * 100) }}%</div>
     </div>
 </script>
 
@@ -42,13 +49,7 @@
         template: '#slide-template',
         props: {
             swidth: Number
-        },
-        mounted: function() {
-            this.$nextTick(function () {
-                    document.getElementById('ind').style.width = this.swidth + 'px'
-                })
         }
-
     })
 
     var demo = new Vue({
@@ -58,7 +59,20 @@
         },
         methods: {
             doSlide: function(e) {
-                this.slideWidth += 100;
+                var that = this//保存当前对象this
+                var tid
+                tid = setTimeout(function repeatMe() {
+                    if(that.slideWidth === 1000) {
+                        clearTimeout(tid)
+                        return;
+                    } else {
+                        that.slideWidth += 1;
+                    }
+                    setTimeout(repeatMe, 20)
+                }, 20)
+            },
+            reset: function(e) {
+                this.slideWidth = 0
             }
         }
     })
